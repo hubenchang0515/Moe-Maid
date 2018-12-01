@@ -27,7 +27,7 @@ if __name__ == "__main__" :
 	if len(sys.argv) >= 3 :
 		fp = open(sys.argv[2],"w")
 		
-	base = "@#&$%*o!;."
+	base = "@#&$%*o!;. "
 	img = Image.open(sys.argv[1])
 	gray = img.convert("L")
 	
