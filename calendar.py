@@ -35,3 +35,4 @@ if __name__ == "__main__" :
 			print("")
 		timestamp += 24 * 60 * 60
 		time_tuple = time.localtime(timestamp)
+	print("")
