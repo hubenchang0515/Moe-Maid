@@ -20,7 +20,7 @@ if __name__ == "__main__" :
 	time_tuple = time.localtime(timestamp)
 	
 	# 打印月初前的空白
-	for i in range(0,time_tuple.tm_wday+1) : 
+	for i in range(0, (time_tuple.tm_wday + 1) % 7) : 
 		print("    ", end="")
 		
 	# 打印日历
