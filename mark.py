@@ -1,3 +1,5 @@
+#! /usr/bin/env python3
+
 from markdown.extensions import Extension
 from markdown.util import etree
 from markdown.postprocessors import Postprocessor
