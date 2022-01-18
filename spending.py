@@ -147,11 +147,25 @@ def main():
     parser:argparse.ArgumentParser = argparse.ArgumentParser(description="Process spending", add_help=True)
     parser.add_argument("-p", "--pid", help="Process ID", default=[], required=False, nargs="+")
     parser.add_argument("-n", "--name", help="Process name", default=[], required=False, nargs="+")
+    parser.add_argument("-e", "--exec", help="Executable file", default=[], required=False, nargs="+")
     args:argparse.Namespace = parser.parse_args()
     
     processes:typing.List[Proc] = []
     memoryData:typing.Dict[Proc, typing.List[int]] = {}
     cpuData:typing.Dict[Proc, typing.List[float]] = {}
+
+    # 启动指定命令
+    if len(args.exec) > 0:
+        exec:str = args.exec[0]
+        pid:int = os.fork()
+        if pid == 0:
+            os.execv(exec, args.exec)
+        else:
+            proc:Proc = Proc.getByPid(pid)
+            if proc is not None:
+                processes.append(proc)
+                memoryData[proc] = []
+                cpuData[proc] = []
     
     for pid in args.pid :
         proc:Proc = Proc.getByPid(pid)
@@ -178,6 +192,7 @@ def main():
     def handleSignal(signum, stackFrame):
         nonlocal run
         run = False
+        raise Exception(signum)
 
     signal(SIGTERM, handleSignal)
     signal(SIGINT, handleSignal)
@@ -186,15 +201,17 @@ def main():
     # 循环抓取数据
     start:datetime = datetime.now()
     seconds:int = 0
-    while run:
-        sleep(1)
-        seconds += 1
-        cpuTime:int = cpu.passJiffies()
-        for proc in processes:
-            if not run: # 退出事件导致时间拉长，产生错误数据
-                break
-            memoryData[proc].append(proc.memory())
-            cpuData[proc].append(round(proc.cpu()/ cpuTime * 100, 2))
+
+    try:
+        while run:
+            sleep(1)
+            seconds += 1
+            cpuTime:int = cpu.passJiffies()
+            for proc in processes:
+                memoryData[proc].append(proc.memory())
+                cpuData[proc].append(round(proc.cpu()/ cpuTime * 100, 2))
+    except Exception as e: 
+        print(e)
 
     # 图表生成
     memoryChart.setTime(start, seconds)
