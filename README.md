@@ -8,3 +8,4 @@
 * [docker-tags.py](docker-tags.py) : 搜索Docker镜像标签  
 * [spending.py](spending.py) : Linux进程开销检测  
 * [git-diff-commit.sh](git-diff-commit.sh) : 比较git上两个分支点commit差异  
+* [deploy-github-pages.sh](deploy-github-pages.sh) : 将仓库的子目录推送到该仓库的 gh-pages 分支上
