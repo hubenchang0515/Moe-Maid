@@ -7,7 +7,6 @@
 * [git-diff-commit.sh](git-diff-commit.sh) : 比较git上两个分支点commit差异  
 * [gmark.py](gmark.py) : 根据Markdown生成HTML，通过GitHub的API  
 * [mark.py](mark.py) : 根据Markdown生成HTML  
-* [mark.py](mark.py) : 根据Markdown生成HTML  
 * [merge-pdf.py](merge-pdf.py) : 合并文件夹中的 PDF 文件，并生成目录
 * [remove-common-parts.py](remove-common-parts.py) : 将文件夹中的文件进行重命名，移除文件名中的相同部分
 * [today.py](today.py) : 查看日历  
